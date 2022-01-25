@@ -25,6 +25,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PasswordStrengthMeterTest {
 
+    // 반복되는 코드를 변수로 또는 메서드로 묶어주어서 중복을 제거한다. test코드도 코드기 때문에 유지보수 대상
+
+    private  PasswordStrengthMeter passwordStrengthMeter = new PasswordStrengthMeter();
+
+    private void assertStrength(String password, PasswordStrength expStr){
+        PasswordStrength result = passwordStrengthMeter.meter(password);
+        assertEquals(expStr, result);
+    }
+
     @Test
     public void name(){
         // Test 실행환경이 준비되었는지 확인
@@ -35,12 +44,8 @@ class PasswordStrengthMeterTest {
         // 기능 구현 목록이 완료되면, 가장 쉬운것부터 어려운것, 예외상황부터 먼저 처리한다.
         // 해당 맥락에서는 모든 조건을 충족시키는 것이 가장 구현하기 쉽기때문에, 이를 먼저 Test한다.
 
-        PasswordStrengthMeter passwordStrengthMeter = new PasswordStrengthMeter();
-        PasswordStrength result1 = passwordStrengthMeter.meter("12Abcedfg");
-        assertEquals(PasswordStrength.STRONG, result1);
-        PasswordStrength result2 = passwordStrengthMeter.meter("345!abBBds");
-        assertEquals(PasswordStrength.STRONG, result2);
-
+        assertStrength("12Abcedfg", PasswordStrength.STRONG);
+        assertStrength("345!abBBds", PasswordStrength.STRONG);
     }
 
     @Test
@@ -48,19 +53,14 @@ class PasswordStrengthMeterTest {
         // 기능 추가1 - 길이가 8이하일때
         // NORMAL 조건을 만족하는 모든 조건을 test하는 것이 아니라, 기능 하나만 체크한다.
 
-        PasswordStrengthMeter passwordStrengthMeter = new PasswordStrengthMeter();
-        PasswordStrength result = passwordStrengthMeter.meter("12Abcd");
-        assertEquals(PasswordStrength.NORMAL, result);
-        PasswordStrength result2 = passwordStrengthMeter.meter("12Ab!Cd");
-        assertEquals(PasswordStrength.NORMAL, result2);
+        assertStrength("12Abcd", PasswordStrength.NORMAL);
+        assertStrength("12Ab!Cd", PasswordStrength.NORMAL);
     }
 
     @Test
     public void meetCriteria_Except_For_Number_Then_Normal(){
-
-        PasswordStrengthMeter passwordStrengthMeter = new PasswordStrengthMeter();
-        PasswordStrength result1  = passwordStrengthMeter.meter("Abcd@dddd");
-        assertEquals(PasswordStrength.NORMAL, result1);
+        assertStrength("Abcd@dddd", PasswordStrength.NORMAL);
+        assertStrength("AD@ddrrrsd", PasswordStrength.NORMAL);
 
     }
 
