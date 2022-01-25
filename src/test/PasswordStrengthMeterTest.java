@@ -1,7 +1,7 @@
 package test;
 
-import main.StringValidator.PasswordStrength;
-import main.StringValidator.PasswordStrengthMeter;
+import main.PasswordStrengthMeter.PasswordStrength;
+import main.PasswordStrengthMeter.PasswordStrengthMeter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
