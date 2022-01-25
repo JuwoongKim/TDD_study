@@ -65,6 +65,10 @@ class PasswordStrengthMeterTest {
     }
 
 
+    @Test
+    public void nullInput_Then_Invalid(){
+        assertStrength(null, PasswordStrength.INVALID);
+    }
 
 
 
